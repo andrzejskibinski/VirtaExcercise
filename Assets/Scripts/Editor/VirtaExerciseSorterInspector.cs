@@ -9,6 +9,8 @@ public class VirtaExerciseSorterInspector : Editor
     private string errorText = "Sorting only works in prefab mode";
     public override void OnInspectorGUI()
     {
+
+        //unhappy code first
         if (UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage() == null)
         {
             GUI.contentColor = Color.red;
@@ -20,6 +22,7 @@ public class VirtaExerciseSorterInspector : Editor
             return;
         }
 
+        //sorting gui
         GUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
         GUILayout.Label("Sorting");
@@ -48,6 +51,7 @@ public class VirtaExerciseSorterInspector : Editor
         }
         GUILayout.EndHorizontal();
 
+        //filtering gui
         GUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
         GUILayout.Label("Filtering");
@@ -64,6 +68,14 @@ public class VirtaExerciseSorterInspector : Editor
         GUILayout.EndHorizontal();
 
         sorter.CategoryFilter.Keys.ToList().ForEach((k) => sorter.SetCategory(k, GUILayout.Toggle(sorter.CategoryFilter[k], k.ToString())));
+
+        //obvious label to mark the Virta scripts
+        GUILayout.BeginHorizontal();
+        GUILayout.FlexibleSpace();
+        GUI.contentColor = Color.green;
+        GUILayout.Label("----Virta Components----");
+        GUILayout.FlexibleSpace();
+        GUILayout.EndHorizontal();
     }
 
     /// <summary>
@@ -97,4 +109,3 @@ public class VirtaExerciseSorterInspector : Editor
         Repaint();
     }
 }
-
