@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -5,31 +6,71 @@ using UnityEngine;
 public class VirtaExerciseSorterInspector : Editor
 {
     private VirtaExerciseSorter sorter;
-    private string errorText = "This script only works in prefab mode";
-
+    private string errorText = "Sorting only works in prefab mode";
     public override void OnInspectorGUI()
     {
         if (UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage() == null)
         {
             GUI.contentColor = Color.red;
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
             GUILayout.Label(errorText);
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
             return;
         }
 
+        GUILayout.BeginHorizontal();
+        GUILayout.FlexibleSpace();
+        GUILayout.Label("Sorting");
+        GUILayout.FlexibleSpace();
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Sort by name ascending"))
+        {
+            OnSortButton(VirtaComponentSortingMode.NameAscending);
+        }
         if (GUILayout.Button("Sort by name descending"))
         {
-            SortComponents();
+            OnSortButton(VirtaComponentSortingMode.NameDescending);
         }
+        GUILayout.EndHorizontal();
 
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Sort by category ascending"))
+        {
+            OnSortButton(VirtaComponentSortingMode.CategoryAscending);
+        }
+        if (GUILayout.Button("Sort by category descending"))
+        {
+            OnSortButton(VirtaComponentSortingMode.CategoryDescending);
+        }
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        GUILayout.FlexibleSpace();
+        GUILayout.Label("Filtering");
+        GUILayout.FlexibleSpace();
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
         sorter = target as VirtaExerciseSorter;
-        sorter.nameFilter = EditorGUILayout.TextField("filter", sorter.nameFilter);
+        sorter.NameFilter = EditorGUILayout.TextField(sorter.NameFilter);
         if (GUILayout.Button("Filter"))
         {
-            HideComponents();
+            OnFilterButton();
         }
+        GUILayout.EndHorizontal();
+
+        sorter.CategoryFilter.Keys.ToList().ForEach((k) => sorter.SetCategory(k, GUILayout.Toggle(sorter.CategoryFilter[k], k.ToString())));
     }
 
-    private void SortComponents()
+    /// <summary>
+    /// triggered by Sort button
+    /// </summary>
+    /// <param name="mode">Sorting mode</param>
+    private void OnSortButton(VirtaComponentSortingMode mode)
     {
         if (UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage() == null)
         {
@@ -38,10 +79,13 @@ public class VirtaExerciseSorterInspector : Editor
         }
 
         sorter = target as VirtaExerciseSorter;
-        sorter.SortComponents();
+        sorter.SortComponents(mode);
     }
 
-    private void HideComponents()
+    /// <summary>
+    /// triggered by Filter button
+    /// </summary>
+    private void OnFilterButton()
     {
         if (UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage() == null)
         {

@@ -4,8 +4,5 @@ using UnityEngine;
 
 public class FuseCobaMaterialComponent : VirtaMonoBehaviour
 {
-    private void Awake()
-    {
-        Category = VirtaComponentCategory.Mesh;
-    }
+    public override VirtaComponentCategory Category { get { return VirtaComponentCategory.Controller; } }
 }

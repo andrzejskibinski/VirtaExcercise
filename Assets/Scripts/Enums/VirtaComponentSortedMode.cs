@@ -1,0 +1,1 @@
+public enum VirtaComponentSortingMode {NameAscending, NameDescending, CategoryAscending, CategoryDescending}

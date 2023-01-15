@@ -3,9 +3,5 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class OrganHapticsConfigurator : VirtaMonoBehaviour
-{
-    private void Awake()
-    {
-        Category = VirtaComponentCategory.Configurator;
-    }
+{public override VirtaComponentCategory Category { get {return VirtaComponentCategory.Configurator;}}
 }

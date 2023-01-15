@@ -11,12 +11,39 @@ public class ComponentOrganizer
 
     public List<Component> SortedComponents = new List<Component>();
 
-    public void SortByNameDescending(List<Component> components){
-        components.ForEach((c) => {
-            if(c is VirtaMonoBehaviour) VirtaComponents.Add(c);
+
+    public void Sort(List<Component> components, VirtaComponentSortingMode mode)
+    {
+        List<Component> virtaUnsortedComponents = new List<Component>();
+
+        components.ForEach((c) =>
+        {
+            if (c is VirtaMonoBehaviour) virtaUnsortedComponents.Add(c);
             else if (c is VirtaExerciseSorter) Sorter = c;
             else OtherComponents.Add(c);
-        });  
+        });
+        switch (mode)
+        {
+            case VirtaComponentSortingMode.NameAscending:
+                VirtaComponents = virtaUnsortedComponents   .OrderBy((c) => c.GetType().ToString())
+                                                            .ToList();
+                break;
+            case VirtaComponentSortingMode.NameDescending:
+                VirtaComponents = virtaUnsortedComponents   .OrderByDescending((c) => c.GetType().ToString())
+                                                            .ToList();
+                break;
+            case VirtaComponentSortingMode.CategoryAscending:
+                VirtaComponents = virtaUnsortedComponents   .OrderBy((c) => (c as VirtaMonoBehaviour).Category)
+                                                            .ThenBy((c) => c.GetType().ToString())
+                                                            .ToList();
+                break;
+            case VirtaComponentSortingMode.CategoryDescending:
+                VirtaComponents = virtaUnsortedComponents   .OrderByDescending((c) => (c as VirtaMonoBehaviour).Category)  
+                                                            .ThenBy((c) => c.GetType().ToString())
+                                                            .ToList();
+                break;
+        }
+
         SortedComponents.AddRange(OtherComponents);
         SortedComponents.Add(Sorter);
         SortedComponents.AddRange(VirtaComponents);

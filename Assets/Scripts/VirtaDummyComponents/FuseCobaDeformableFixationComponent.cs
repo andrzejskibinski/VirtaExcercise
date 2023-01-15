@@ -4,8 +4,5 @@ using UnityEngine;
 
 public class FuseCobaDeformableFixationComponent : VirtaMonoBehaviour
 {
-    private void Awake()
-    {
-        Category = VirtaComponentCategory.Coba;
-    }
+    public override VirtaComponentCategory Category { get { return VirtaComponentCategory.Coba; } }
 }

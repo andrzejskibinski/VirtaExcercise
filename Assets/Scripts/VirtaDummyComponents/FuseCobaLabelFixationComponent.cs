@@ -4,8 +4,5 @@ using UnityEngine;
 
 public class FuseCobaLabelFixationComponent : VirtaMonoBehaviour
 {
-    private void Awake()
-    {
-        Category = VirtaComponentCategory.Label;
-    }
+    public override VirtaComponentCategory Category { get { return VirtaComponentCategory.Coba; } }
 }

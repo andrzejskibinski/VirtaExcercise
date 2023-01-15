@@ -4,6 +4,5 @@ using UnityEngine;
 
 public abstract class VirtaMonoBehaviour : MonoBehaviour
 {
-    [HideInInspector]
-    public VirtaComponentCategory Category;
+    public virtual VirtaComponentCategory Category { get { return VirtaComponentCategory.Coba; } }
 }

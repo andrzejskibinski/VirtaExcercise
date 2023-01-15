@@ -4,8 +4,5 @@ using UnityEngine;
 
 public class FuseGraspedBodyComponent : VirtaMonoBehaviour
 {
-    private void Awake()
-    {
-        Category = VirtaComponentCategory.Controller;
-    }
+    public override VirtaComponentCategory Category { get { return VirtaComponentCategory.Controller; } }
 }
