@@ -12,3 +12,8 @@ You asked to a different approach, so I thought about it on few levels
 My idea was to duplicate virta components (in memory or to temp object), sort them then copy over back to original obeject in new order. 
 But quickly learned that this might fail on many levels (possibly loosing references, not copying all properties, etc) I abandoned this idea.
 - different approach might be to write a EditorWindow that would handle offer the same functionality, but from a seperate window
+
+Things to consider as future dev ideas
+- instead of hard-coded categories dictionary, generate it on the fly
+- allow scripts to have multiple categories
+- atm after filtering the components, it takes a time to update inspector (apparantly object needs to re-selected for this). Using Repaint() doesn't solve this. Instead I should hook object re-selection to this.
